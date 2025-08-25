@@ -1,0 +1,69 @@
+/**
+ * @description ajax 工具封装
+ * @author 双越老师
+ */
+
+import axios from 'axios'
+
+// 跨域带 cookie
+axios.defaults.withCredentials = true
+
+// 统一处理 res
+function resHandler(res = {}) {
+    const resData = res.data || {}
+    if (resData.errno === 0) {
+        return resData.data || {}
+    }
+
+    // 统一弹出错误
+    if (!resData.hideMessage) {
+        alert(resData.message)
+    }
+
+    // 这里可以根据错误码给出不同的错误提示或处理逻辑
+    if (resData.errno === 401) {
+        // 可能是未授权或登录失效的错误，重定向到登录页面
+        window.location.href = '/login'
+    }
+    
+    throw new Error(`错误码： ${resData.errno} \n错误信息：${resData.message}`)
+}
+
+/**
+ * 发送 get 请求
+ * @param {String} url url
+ * @param {Object} params url 参数
+ */
+async function ajaxGet(url = '', params = {}) {
+    if (!url) return
+
+    try {
+        const res = await axios.get(url, { params }) // params 应该作为配置项传入
+        return resHandler(res)
+    } catch (ex) {
+        console.error('请求失败:', ex) // 可以打印更多的错误信息帮助调试
+        throw new Error(ex)
+    }
+}
+
+/**
+ * 发送 post 请求
+ * @param {String} url url
+ * @param {Object} data post body
+ */
+async function ajaxPost(url = '', data = {}) {
+    if (!url) return
+
+    try {
+        const res = await axios.post(url, data)
+        return resHandler(res)
+    } catch (ex) {
+        console.error('请求失败:', ex)
+        throw new Error(ex)
+    }
+}
+
+export {
+    ajaxGet,
+    ajaxPost
+}
