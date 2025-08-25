@@ -1,16 +1,41 @@
-项目初始化：使用 npm init -y 或 yarn init -y 命令初始化项目，生成 package.json 文件。
+项目简介
+这是一个基于 Node.js 和 Koa2 构建的后端API服务，旨在为留言板应用提供核心功能。该项目采用RESTful API设计，实现了用户注册、登录，以及留言的创建、更新、删除和查询等所有基本操作。
 
-安装核心依赖：安装 Koa2 框架以及常用的中间件，例如 koa-router 用于路由管理，koa-bodyparser 用于处理 POST 请求体。
+项目遵循MVC分层架构，确保了代码的高可维护性和可扩展性。
 
-创建入口文件：编写 app.js 或 index.js 作为应用的入口，并在其中配置基础的 Koa 服务。
+核心技术栈
+后端框架：Node.js 和 Koa2
 
- 连接数据库 (Schema 和 Model)
-这是 API 与数据库交互的核心部分。以 MongoDB 为例，通常会使用 Mongoose 库来管理连接和数据模型。
+数据库：MongoDB
 
-安装 Mongoose：首先需要安装 mongoose 库。
+数据库ODM：Mongoose
 
-定义 Schema：在 model 层中，使用 Schema 来定义数据的结构和类型。这类似于关系型数据库中的表结构，确保数据的规范性。
+路由管理：koa-router
 
-创建 Model：通过 Schema 创建 Model。Model 是数据库文档（Document）的构造函数，通过它你可以进行数据的增、删、改、查等操作。
+身份验证：JWT (JSON Web Tokens)
 
-建立连接：在入口文件或单独的数据库配置文件中，使用 mongoose.connect() 方法来建立与 MongoDB 数据库的连接。
+主要功能模块
+本API服务提供以下核心接口，以支持前端应用的开发：
+
+用户认证与授权
+
+注册（/api/register）：允许新用户创建账户。
+
+登录（/api/login）：验证用户身份并返回JWT，用于后续接口的认证。
+
+留言管理
+
+创建留言（/api/messages）：允许已登录用户发布新留言。
+
+获取留言列表（/api/messages）：分页查询所有留言，支持按时间排序等。
+
+更新留言（/api/messages/:id）：允许留言的发布者修改其内容。
+
+删除留言（/api/messages/:id）：允许留言的发布者删除其留言。
+
+项目亮点
+分层架构：项目严格按照 Controller-Service-Model 分层，职责明确，便于团队协作和功能迭代。
+
+安全认证：采用 JWT 机制进行用户身份验证，确保了API接口的安全性。
+
+RESTful设计：所有接口均遵循 RESTful 规范，URL设计清晰，易于理解和使用。
